@@ -130,7 +130,7 @@ draw_gun:
 
     gunfor2:
         cmp dx,[tamcolg]
-        je endfor2
+        je gunfor2end
         mov cx,[xgun]
         gunfor1:
             cmp cx,[tamlineg]
@@ -195,7 +195,7 @@ draw_target:
     targfor2end:
 
     popa
-retr 
+ret
 
 move_target:
     pusha
@@ -359,7 +359,95 @@ wait_user_comand:
 
     ntem:
 
-    popa 
+    popa  ;; missing space command
+ret
+
+redraw_gun:
+    pusha
+    xor ax,ax
+    xor bx,bx
+    xor cx,cx
+    xor dx,dx
+
+    mov cx,[xgun]
+    mov dx,[ygun]
+
+    mov di,tamlineg
+    mov ax,[xgun]
+    add ax,24 ;; bound of pixels
+    stosw
+
+    mov di,tamcolg
+    mov ax,[ygun]
+    add ax,24 ;; bound of pixels
+    stosw
+
+    xor ax,ax
+
+    sub cx,8 ;; bound of pixels
+    sub dx,8 ;; bound of pixels
+
+    redrawgunfor2:
+        cmp dx,[tamcolg]
+        je redrawgunfor2end
+        mov cx,[xgun]
+        redrawgunfor1:
+            cmp cx,[tamlineg]
+            je redrawgunfor1end
+            mov al,grey
+            call write_pixel
+            inc cx
+            jmp redrawgunfor1
+        redrawgunfor1end:
+        inc dx
+        jmp redrawgunfor2
+    redrawgunfor2end:
+
+    popa
+ret 
+
+redraw_target:
+    pusha
+    xor ax,ax
+    xor bx,bx
+    xor cx,cx
+    xor dx,dx
+
+    mov cx,[xtarg]
+    mov dx,[ytarg]
+
+    mov di,tamlinet
+    mov ax,[xtarg]
+    add ax,24 ;; bound of pixels 
+    stosw
+
+    mov di,tamcolt
+    mov ax,[ytarg]
+    add ax,24 ;; bound of pixels
+    stosw
+
+    xor ax,ax
+
+    sub cx,8 ;; bound of pixels 
+    sub dx,8 ;; bound of pixels 
+
+    redrawtargfor2:
+        cmp dx,[tamcolt]
+        je redrawtargfor2end
+        mov cx,[xtarg]
+        redrawtargfor1:
+            cmp cx,[tamlinet]
+            je redrawtargfor1end
+            mov al,grey
+            call write_pixel
+            inc cx
+            jmp redrawtargfor1
+        redrawtargfor1end:
+        inc dx
+        jmp redrawtargfor2
+    redrawtargfor2end:
+
+    popa
 
 ret
 
@@ -377,6 +465,8 @@ start:
         call wait_user_comand
         call move_target
         call forinutil
+        call redraw_gun
+        call redraw_target
     jmp game
 
 done:
