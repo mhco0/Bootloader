@@ -9,11 +9,12 @@ blue equ 0x1
 yellow equ 0xe
 white equ 0xf
 grey equ 0x7
-mangeta equ 0xd
+magenta equ 0xd
+space equ 0x20
 
 string  db "Alfa",0x0
 imggun  db 16, 16, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 14, 14, 14, 0, 0, 14, 14, 14, 14, 14, 14, 0, 0, 0, 14, 14, 14, 14, 14, 0, 14, 14, 14, 14, 14, 14, 14, 14, 0, 0, 0, 0, 14, 14, 14, 14, 14, 0, 14, 0, 14, 0, 14, 14, 0, 13, 13, 0, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0, 13, 13, 0, 0, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0, 0, 13, 13, 13, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 14, 14, 0, 6, 6, 0, 0, 0, 13, 13, 13, 13, 13, 13, 0, 14, 14, 0, 6, 0, 0, 0, 13, 0, 0, 13, 13, 13, 13, 0, 0, 14, 0, 6, 6, 0, 13, 13, 13, 0, 0, 13, 13, 13, 13, 0, 0, 14, 0, 6, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 6, 6, 6, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13
-imgtag  db 16, 16, 13, 13, 13, 13, 13, 13, 13, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 4, 4, 15, 15, 15, 0, 0, 13, 13, 13, 0, 0, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 0, 0, 13, 13, 0, 15, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 15, 0, 13, 13, 0, 15, 15, 15, 15, 4, 4, 4, 4, 15, 15, 15, 15, 0, 13, 13, 0, 15, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 15, 0, 13, 13, 0, 15, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 15, 0, 13, 13, 0, 15, 15, 15, 15, 4, 4, 4, 4, 15, 15, 15, 15, 0, 13, 13, 0, 15, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 15, 0, 13, 13, 0, 0, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 0, 0, 13, 13, 13, 0, 0, 15, 15, 15, 4, 4, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 13, 13, 13, 13, 13, 13, 13
+imgtarg  db 16, 16, 13, 13, 13, 13, 13, 13, 13, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 4, 4, 15, 15, 15, 0, 0, 13, 13, 13, 0, 0, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 0, 0, 13, 13, 0, 15, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 15, 0, 13, 13, 0, 15, 15, 15, 15, 4, 4, 4, 4, 15, 15, 15, 15, 0, 13, 13, 0, 15, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 15, 0, 13, 13, 0, 15, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 15, 0, 13, 13, 0, 15, 15, 15, 15, 4, 4, 4, 4, 15, 15, 15, 15, 0, 13, 13, 0, 15, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 15, 0, 13, 13, 0, 0, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 0, 0, 13, 13, 13, 0, 0, 15, 15, 15, 4, 4, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 13, 13, 13, 13, 13, 13, 13
 
 tamlineg dw 16
 tamcolg dw 16
@@ -25,8 +26,10 @@ xgun dw 0
 ygun dw 92
 vgun dw 5
 
-xtarg dw 301
+xtarg dw 303
 ytarg dw 92
+vtarg dw 1
+dirtarg dw 1 ; 1 == up 0 == down
 
 putchar: ; mov al , "chat" 
 ;this will put a char in the screen and goes to the next position
@@ -133,7 +136,7 @@ draw_gun:
             cmp cx,[tamlineg]
             je gunfor1end
             lodsb
-            cmp al,mangeta
+            cmp al,magenta
             je notprintgun
             call write_pixel
             notprintgun:
@@ -169,7 +172,7 @@ draw_target:
 
     xor ax,ax
 
-    mov si,imgtag
+    mov si,imgtarg
     add si,2;image length
 
     targfor2:
@@ -180,7 +183,7 @@ draw_target:
             cmp cx,[tamlinet]
             je targfor1end
             lodsb
-            cmp al,mangeta
+            cmp al,magenta
             je notprinttarg
             call write_pixel
             notprinttarg:
@@ -192,7 +195,173 @@ draw_target:
     targfor2end:
 
     popa
+retr 
+
+move_target:
+    pusha
+        xor ax,ax
+        xor bx,bx
+        xor cx,cx
+        xor dx,dx
+
+        mov bx,[dirtarg]
+        mov dx,[ytarg]
+
+        cmp bx,1 ; 1==up , 0 == down
+        je targetup
+        jne targetdown
+
+        targetup:
+            sub dx,[vtarg]
+
+            cmp dx,0
+
+            jle change_dirup
+            jmp set_dirup
+
+            change_dirup:
+                sub bx,1
+
+                mov di,dirtarg
+                mov ax,bx
+                stosw
+
+                mov di,ytarg
+                mov ax,dx
+                stosw
+
+                jmp exittarg
+
+            set_dirup:
+
+                mov di ,ytarg
+                mov ax ,dx
+                stosw
+
+                jmp exittarg
+
+        targetdown:
+
+            add dx,[vtarg]
+            add ax,dx
+            add ax,16
+
+            cmp ax,endy
+
+            jge change_dirdown
+
+            jmp set_dirdown
+
+            change_dirdown:
+                add bx,1
+
+                mov di,dirtarg
+                mov ax,bx
+                stosw
+
+                mov di,ytarg
+                mov ax,dx
+                stosw
+
+                jmp exittarg
+
+            set_dirdown:
+
+            mov di,ytarg
+            mov ax,dx
+            stosw
+
+            jmp exittarg    
+
+
+    exittarg:
+
+    popa
 ret 
+
+forinutil:
+    pusha
+
+    mov cx, 0x1
+    mov dx, 0x0
+    mov ah, 0x86
+    int 0x15
+
+    popa
+ret
+
+wait_user_comand:
+
+    pusha
+
+    xor ax,ax
+    xor bx,bx
+    xor cx,cx
+    xor dx,dx
+
+    mov dx,[ygun]
+
+    mov ah,0x01
+    int 0x16
+
+    jz ntem
+
+    tem:
+        mov ah ,0x00
+        int 0x16
+
+        cmp al,'w'
+        je make_move_up
+        cmp al,'s'
+        je make_move_down
+        cmp al,space
+        jmp exitguncomand
+
+
+        make_move_up:
+            sub dx,[vgun]
+            cmp dx,0
+            jle exitguncomand
+            jmp gun_up
+
+            gun_up:
+
+                mov di,ygun
+                mov ax,dx
+                stosw
+
+                jmp exitguncomand
+
+        make_move_down
+            xor ax,ax
+            add dx,[vgun]
+            add ax,dx
+            add ax,16
+            cmp ax,endy
+            jge exitguncomand
+            jmp gun_down
+
+            gun_down:
+
+                mov di,ygun
+                mov ax,dx
+                stosw
+
+                jmp exitguncomand
+
+
+        ;;space
+
+
+        exitguncomand:
+        mov ax,0x0604
+        int 0x16
+
+    ntem:
+
+    popa 
+
+ret
 
 start:
 	xor ax, ax
@@ -201,8 +370,14 @@ start:
 
     call set_video_mode
     call draw_background
-    call draw_gun
-    call draw_target
+
+    game:
+        call draw_gun
+        call draw_target
+        call wait_user_comand
+        call move_target
+        call forinutil
+    jmp game
 
 done:
 	jmp $
