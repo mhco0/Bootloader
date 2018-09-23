@@ -1,5 +1,6 @@
 org 0x7e00
 jmp 0x0000:start
+
 centerx equ 160
 centery equ 100
 endx equ 320
@@ -15,6 +16,7 @@ space equ 0x20
 string  db "Alfa",0x0
 imggun  db 16, 16, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 14, 14, 14, 0, 0, 14, 14, 14, 14, 14, 14, 0, 0, 0, 14, 14, 14, 14, 14, 0, 14, 14, 14, 14, 14, 14, 14, 14, 0, 0, 0, 0, 14, 14, 14, 14, 14, 0, 14, 0, 14, 0, 14, 14, 0, 13, 13, 0, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0, 13, 13, 0, 0, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0, 0, 13, 13, 13, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 14, 14, 0, 6, 6, 0, 0, 0, 13, 13, 13, 13, 13, 13, 0, 14, 14, 0, 6, 0, 0, 0, 13, 0, 0, 13, 13, 13, 13, 0, 0, 14, 0, 6, 6, 0, 13, 13, 13, 0, 0, 13, 13, 13, 13, 0, 0, 14, 0, 6, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 6, 6, 6, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13
 imgtarg  db 16, 16, 13, 13, 13, 13, 13, 13, 13, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 4, 4, 15, 15, 15, 0, 0, 13, 13, 13, 0, 0, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 0, 0, 13, 13, 0, 15, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 15, 0, 13, 13, 0, 15, 15, 15, 15, 4, 4, 4, 4, 15, 15, 15, 15, 0, 13, 13, 0, 15, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 15, 0, 13, 13, 0, 15, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 15, 0, 13, 13, 0, 15, 15, 15, 15, 4, 4, 4, 4, 15, 15, 15, 15, 0, 13, 13, 0, 15, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 15, 0, 13, 13, 0, 0, 15, 15, 15, 15, 4, 4, 15, 15, 15, 15, 0, 0, 13, 13, 13, 0, 0, 15, 15, 15, 4, 4, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 0, 0, 15, 15, 15, 15, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 15, 15, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 13, 13, 13, 13, 13, 13, 13
+imgbullet db 16, 16, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 0, 0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 14, 14, 14, 14, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 14, 14, 14, 14, 14, 14, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 14, 14, 14, 14, 14, 14, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 14, 14, 14, 14, 14, 14, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 14, 14, 14, 14, 14, 14, 0, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 14, 14, 14, 14, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0, 0, 0, 0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13
 
 tamlineg dw 16
 tamcolg dw 16
@@ -22,14 +24,32 @@ tamcolg dw 16
 tamlinet dw 16
 tamcolt dw 16
 
+tamlineb dw 16
+tamcolb dw 16
+
 xgun dw 0
 ygun dw 92
 vgun dw 5
 
-xtarg dw 303
+xbullet dw 0
+ybullet dw 92
+xbulletcenter dw 8
+ybulletcenter dw 100
+vbullet dw 10
+showbullet dw 0 ;  1 == pulled the trigger 0 == not shotting 
+
+xtarg dw 304
 ytarg dw 92
+xtargcenter dw 312
+ytargcenter dw 100
 vtarg dw 1
+rtarg dw 5
 dirtarg dw 1 ; 1 == up 0 == down
+
+life dw 3
+points dw 0
+
+outofbound dw 0
 
 putchar: ; mov al , "chat" 
 ;this will put a char in the screen and goes to the next position
@@ -61,6 +81,12 @@ puts:; mov cl 0x0(endl) , load string in si . (in work)
     mov ah,0x2
     int 0x10
 ret
+
+read_pixel:
+    mov ah, 0xd
+    mov bh,0
+    int 0x10
+ret 
 
 write_pixel: ;AL = Color, BH = Page Number
 ;cx=x , dx=y
@@ -283,9 +309,147 @@ forinutil:
     pusha
 
     mov cx, 0x1
-    mov dx, 0x0
+    mov dx, 0x80c3
     mov ah, 0x86
     int 0x15
+
+    popa
+ret
+
+draw_bullet:
+    pusha
+        xor ax,ax
+        xor bx,bx
+        xor cx,cx
+        xor dx,dx
+
+        mov cx,[xbullet]
+        mov dx,[ybullet]
+
+        mov di,tamlineb
+        mov ax,[xbullet]
+        add ax,16
+        stosw
+
+        mov di,tamcolb
+        mov ax,[ybullet]
+        add ax,16
+        stosw
+
+        xor ax,ax
+        mov si,imgbullet
+        add si,2
+
+        bulletfor2:
+            cmp dx,[tamcolb]
+            je bulletfor2end
+            mov cx,[xbullet]
+            bulletfor1:
+                cmp cx,[tamlineb]
+                je bulletfor1end
+                lodsb
+                cmp al ,magenta
+                je notprintbullet
+                call write_pixel
+                notprintbullet:
+                inc cx
+                jmp bulletfor1
+            bulletfor1end:
+            inc dx
+            jmp bulletfor2
+        bulletfor2end:
+
+    popa
+ret 
+
+redraw_bullet:
+    pusha
+        xor ax,ax
+        xor bx,bx
+        xor cx,cx
+        xor dx,dx
+
+        mov cx,[xbullet]
+        mov dx,[ybullet]
+
+        mov di,tamlineb
+        mov ax,[xbullet]
+        add ax,16 ;; bound of pixels
+        stosw
+
+        mov di,tamcolb
+        mov ax,[ybullet]
+        add ax,16 ;; bound of pixels
+        stosw
+
+        xor ax,ax
+
+        sub cx,16;; bound of pixels
+        sub dx,16;; bound of pixels
+
+        redrawbulletfor2:
+            cmp dx,[tamcolb]
+            je redrawbulletfor2end
+            mov cx,[xbullet]
+            redrawbulletfor1:
+                cmp cx,[tamlineb]
+                je redrawbulletfor1end
+                mov al,grey
+                call write_pixel
+                inc cx
+                jmp redrawbulletfor1
+            redrawbulletfor1end:
+            inc dx
+            jmp redrawbulletfor2
+        redrawbulletfor2end:
+    popa
+ret 
+
+moving_bullet:
+    pusha 
+        xor ax,ax
+        xor bx,bx
+        xor cx,cx
+        xor dx,dx
+
+        mov bx,[showbullet]
+        mov cx,[xbullet]
+        mov dx,[ybullet]
+
+        cmp bx,0
+        je bullet_not_moving
+
+        call draw_bullet
+        ;call redraw_bullet
+        ;call forinutil
+
+        mov di,xbullet
+        add cx,[vbullet]
+        mov ax,cx
+        stosw
+        
+        cmp cx,endx-16
+        jle bullet_not_moving
+
+        mov di,showbullet
+        mov ax,0
+        stosw
+
+        bullet_not_moving:
+    popa
+ret
+
+run_bullet:
+    pusha
+
+    xor ax,ax
+    xor bx,bx
+    xor cx,cx
+    xor dx,dx
+    
+    mov di,showbullet
+    mov ax,1
+    stosw
 
     popa
 ret
@@ -300,6 +464,7 @@ wait_user_comand:
     xor dx,dx
 
     mov dx,[ygun]
+    mov cx,[showbullet]
 
     mov ah,0x01
     int 0x16
@@ -315,6 +480,7 @@ wait_user_comand:
         cmp al,'s'
         je make_move_down
         cmp al,space
+        je make_bullet_move
         jmp exitguncomand
 
 
@@ -330,9 +496,22 @@ wait_user_comand:
                 mov ax,dx
                 stosw
 
+                cmp cx,0 ;bullet notmoving
+                je update_bullet_up
                 jmp exitguncomand
 
-        make_move_down
+                update_bullet_up:
+                mov di,ybullet
+                mov ax,dx
+                stosw
+
+                mov di,xbullet
+                mov ax,[xgun]
+                stosw
+
+                jmp exitguncomand
+
+        make_move_down:
             xor ax,ax
             add dx,[vgun]
             add ax,dx
@@ -347,11 +526,24 @@ wait_user_comand:
                 mov ax,dx
                 stosw
 
+                cmp cx ,0 ;bullet not moving
+                je update_bullet_down 
+                jmp exitguncomand
+
+                update_bullet_down:
+                mov di,ybullet
+                mov ax,dx
+                stosw
+
+                mov di,xbullet
+                mov ax,[xgun]
+                stosw
+
                 jmp exitguncomand
 
 
-        ;;space
-
+        make_bullet_move:
+            call run_bullet
 
         exitguncomand:
         mov ax,0x0604
@@ -448,7 +640,73 @@ redraw_target:
     redrawtargfor2end:
 
     popa
+ret
 
+touch_target?:
+    pusha
+        xor ax,ax
+        xor bx,bx 
+        xor cx,cx
+        xor dx,dx
+
+        mov di,xbulletcenter
+        mov ax,[xbullet]
+        add ax,8
+        stosw
+
+        mov di,ybulletcenter
+        mov ax,[ybullet]
+        add ax,8
+        stosw
+
+
+        mov di,tamlinet
+        mov ax,[xtarg]
+        add ax,16
+        stosw
+
+        mov di,tamcolt
+        mov ax,[ytarg]
+        add ax,16
+        stosw
+
+        mov di,xtargcenter
+        mov ax,[xtarg]
+        add ax,8
+        stosw
+
+        mov di,ytargcenter
+        mov ax,[ytarg]
+        add ax,8
+        stosw
+
+        mov ax ,[xbulletcenter]
+        mov bx ,[ybulletcenter]
+
+        sub ax,[xtargcenter]
+        sub bx,[ytargcenter]
+
+        imul ax,ax
+        imul bx,bx
+
+        add ax,bx
+        mov bx ,[rtarg]
+        imul bx,bx
+
+        cmp ax ,bx
+        jle countpoint
+        jmp exit_touch
+        countpoint:
+
+            mov di ,points
+            mov ax ,[points]
+            add ax,1
+            lodsw
+            jmp exit_touch
+
+        exit_touch:
+
+    popa
 ret
 
 start:
@@ -460,13 +718,14 @@ start:
     call draw_background
 
     game:
+        call redraw_gun
+        call redraw_target
         call draw_gun
         call draw_target
         call wait_user_comand
+        call moving_bullet
         call move_target
         call forinutil
-        call redraw_gun
-        call redraw_target
     jmp game
 
 done:
