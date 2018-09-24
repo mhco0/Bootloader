@@ -38,9 +38,9 @@ ybulletcenter dw 100
 vbullet dw 10
 showbullet dw 0 ;  1 == pulled the trigger 0 == not shotting 
 
-xtarg dw 304
+xtarg dw 302
 ytarg dw 92
-xtargcenter dw 312
+xtargcenter dw 310
 ytargcenter dw 100
 vtarg dw 1
 rtarg dw 5
@@ -48,8 +48,7 @@ dirtarg dw 1 ; 1 == up 0 == down
 
 life dw 3
 points dw 0
-
-outofbound dw 0
+igotit dw 0
 
 putchar: ; mov al , "chat" 
 ;this will put a char in the screen and goes to the next position
@@ -82,7 +81,36 @@ puts:; mov cl 0x0(endl) , load string in si . (in work)
     int 0x10
 ret
 
-read_pixel:
+dec_life:
+    pusha
+        xor ax,ax
+        xor bx,bx
+        xor cx,cx
+        xor dx,dx
+
+        mov di,life
+        mov ax,[life]
+        dec ax
+        stosw
+    popa
+ret
+
+inc_points:
+    pusha
+        xor ax,ax
+        xor bx,bx
+        xor cx,cx
+        xor dx,dx
+
+        mov di ,points
+        mov ax,[points]
+        inc ax
+        stosw
+    popa
+ret
+
+read_pixel:;AL = Color, BH = Page Number
+;cx=x , dx=y
     mov ah, 0xd
     mov bh,0
     int 0x10
@@ -369,11 +397,10 @@ redraw_bullet:
         xor cx,cx
         xor dx,dx
 
-        mov cx,[xbullet]
-        mov dx,[ybullet]
 
         mov di,tamlineb
         mov ax,[xbullet]
+        ;sub ax,[vbullet]
         add ax,16 ;; bound of pixels
         stosw
 
@@ -384,13 +411,21 @@ redraw_bullet:
 
         xor ax,ax
 
-        sub cx,16;; bound of pixels
-        sub dx,16;; bound of pixels
+        mov cx,[xbullet]
+        mov dx,[ybullet]
 
+        sub cx,[vbullet];; bound of pixels
+
+        mov ax,[showbullet]
+        cmp ax,1
+        jne end_redraw_bullet
+
+        xor ax,ax
         redrawbulletfor2:
             cmp dx,[tamcolb]
             je redrawbulletfor2end
             mov cx,[xbullet]
+            sub cx,[vbullet]
             redrawbulletfor1:
                 cmp cx,[tamlineb]
                 je redrawbulletfor1end
@@ -402,6 +437,8 @@ redraw_bullet:
             inc dx
             jmp redrawbulletfor2
         redrawbulletfor2end:
+
+        end_redraw_bullet:
     popa
 ret 
 
@@ -418,24 +455,69 @@ moving_bullet:
 
         cmp bx,0
         je bullet_not_moving
+        jne bullet_moving
 
-        call draw_bullet
-        ;call redraw_bullet
-        ;call forinutil
+        bullet_moving:
+            call draw_bullet
+
+            mov di,xbullet
+            add cx,[vbullet]
+            mov ax,cx
+            stosw
+        
+            cmp cx,endx;-16
+            jge bullet_not_moving_more
+            jmp end_moving_bullet
+
+            bullet_not_moving_more:
+
+                mov ax,[igotit]
+
+                cmp ax,1
+                je i_got_the_target
+                jne i_not_got_the_target
+
+
+            i_got_the_target:
+                mov di,igotit
+                mov ax,0
+                stosw
+                jmp bullet_not_moving
+
+            i_not_got_the_target:
+                mov di,igotit
+                mov ax,0
+                stosw
+                call dec_life
+                jmp bullet_not_moving
+
+        bullet_not_moving:
+
+        mov cx,[xgun]
+        mov dx,[ygun]
+
+        call redraw_bullet
 
         mov di,xbullet
-        add cx,[vbullet]
         mov ax,cx
         stosw
-        
-        cmp cx,endx-16
-        jle bullet_not_moving
+
+        mov di,ybullet
+        mov ax,dx
+        stosw
 
         mov di,showbullet
         mov ax,0
         stosw
 
-        bullet_not_moving:
+        mov di,igotit
+        mov ax,0
+        stosw
+
+        jmp end_moving_bullet
+
+        end_moving_bullet:
+
     popa
 ret
 
@@ -507,6 +589,7 @@ wait_user_comand:
 
                 mov di,xbullet
                 mov ax,[xgun]
+      
                 stosw
 
                 jmp exitguncomand
@@ -537,6 +620,7 @@ wait_user_comand:
 
                 mov di,xbullet
                 mov ax,[xgun]
+              
                 stosw
 
                 jmp exitguncomand
@@ -546,10 +630,15 @@ wait_user_comand:
             call run_bullet
 
         exitguncomand:
-        mov ax,0x0604
-        int 0x16
+        ;mov ax,0x0604
+        ;int 0x16
+        mov ah,0xc
+        mov al,0x0  ;; flush 
 
     ntem:
+    mov ah,0xc
+    mov al,0x0  ;; flush 
+    int 0x21
 
     popa  ;; missing space command
 ret
@@ -566,18 +655,23 @@ redraw_gun:
 
     mov di,tamlineg
     mov ax,[xgun]
-    add ax,24 ;; bound of pixels
+    add ax,[vgun]
+    add ax,16 ;; bound of pixels
     stosw
 
     mov di,tamcolg
     mov ax,[ygun]
-    add ax,24 ;; bound of pixels
+    add ax,[vgun]
+    add ax,16 ;; bound of pixels
     stosw
 
     xor ax,ax
 
-    sub cx,8 ;; bound of pixels
-    sub dx,8 ;; bound of pixels
+    cmp dx,[vgun] ;; bound of pixels
+    jge subvgun 
+    jmp redrawgunfor2
+    subvgun:
+        sub dx,[vgun] ;; bound of pixels
 
     redrawgunfor2:
         cmp dx,[tamcolg]
@@ -649,6 +743,10 @@ touch_target?:
         xor cx,cx
         xor dx,dx
 
+        mov ax,[showbullet]
+        cmp ax,1
+        jne exit_touch
+
         mov di,xbulletcenter
         mov ax,[xbullet]
         add ax,8
@@ -658,7 +756,6 @@ touch_target?:
         mov ax,[ybullet]
         add ax,8
         stosw
-
 
         mov di,tamlinet
         mov ax,[xtarg]
@@ -670,39 +767,27 @@ touch_target?:
         add ax,16
         stosw
 
-        mov di,xtargcenter
-        mov ax,[xtarg]
-        add ax,8
-        stosw
+        mov cx,[xbulletcenter]
+        mov dx,[ybulletcenter]
 
-        mov di,ytargcenter
-        mov ax,[ytarg]
-        add ax,8
-        stosw
+        cmp cx,[xtarg]
+        jl exit_touch
+        cmp cx,[tamlinet]
+        jg exit_touch
+        cmp dx,[ytarg]
+        jl exit_touch
+        cmp dx,[tamcolt]
+        jg exit_touch
 
-        mov ax ,[xbulletcenter]
-        mov bx ,[ybulletcenter]
+            call inc_points
+            mov di,igotit
+            mov ax,1
+            stosw
 
-        sub ax,[xtargcenter]
-        sub bx,[ytargcenter]
-
-        imul ax,ax
-        imul bx,bx
-
-        add ax,bx
-        mov bx ,[rtarg]
-        imul bx,bx
-
-        cmp ax ,bx
-        jle countpoint
-        jmp exit_touch
-        countpoint:
-
-            mov di ,points
-            mov ax ,[points]
-            add ax,1
-            lodsw
-            jmp exit_touch
+            mov di,vtarg
+            mov ax,[vtarg]
+            add ax,2
+            stosw
 
         exit_touch:
 
@@ -718,14 +803,19 @@ start:
     call draw_background
 
     game:
+        call wait_user_comand
+        call redraw_bullet
+        call moving_bullet
+        call touch_target?
+        call move_target
         call redraw_gun
         call redraw_target
         call draw_gun
         call draw_target
-        call wait_user_comand
-        call moving_bullet
-        call move_target
         call forinutil
+        mov ax,[life]
+        cmp ax,0
+        je done
     jmp game
 
 done:
