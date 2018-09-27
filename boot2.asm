@@ -83,13 +83,13 @@ reset:
 
     jc reset    ;se o acesso falhar, tenta novamente
 
-    ;call forinutil
+    call forinutil
 
     mov cl,0x0
     mov si,loadst
     call puts
 
-    ;call forinutil
+    call forinutil
 
     jmp load
 
@@ -108,7 +108,7 @@ load:
     mov si,setup
     call puts
 
-    ;call forinutil
+    call forinutil
 
     call istroke
 
@@ -116,13 +116,13 @@ load:
     mov si,loadke
     call puts
 
-    ;call forinutil
+    call forinutil
 
     mov cl,0x0
     mov si,runke
     call puts
 
-    ;call forinutil
+    call forinutil
 
     mov cl,0x0
     mov si,string
